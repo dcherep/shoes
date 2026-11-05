@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, ForeignKey, Date,Float
-from sqlalchemy.orm import DeclarativeBase, Session, relationship
+from sqlalchemy import create_engine,Column, Integer, String, ForeignKey, Date,Float,Text
+from sqlalchemy.orm import DeclarativeBase, relationship
+from sqlalchemy.ext.associationproxy import association_proxy
 
 engine = create_engine("postgresql://admin:12345@217.71.129.139:6075/chudo_obuv")
 
@@ -37,6 +37,7 @@ class SubCategory(Base):
     id = Column(Integer, primary_key=True, index=True)
     category_id=Column(Integer,ForeignKey("categories.id"),nullable=False )
     name=Column(String,nullable=False)
+    category = relationship("Category", lazy="joined")
 
 class Manufacturers(Base):
     __tablename__="manufacturers"
@@ -53,7 +54,11 @@ class Tovar(Base):
     content=Column(String,nullable=False)
     price=Column(Float,nullable=False )
     image_path=Column(String)
+
     manufacture = relationship("Manufacturers", lazy="joined")
+    sub_cat = relationship("SubCategory", lazy="joined")
+    category = association_proxy("sub_cat", "category")
+    items = relationship("TovarItems", lazy="joined")
 
 class TovarItems(Base):
     __tablename__="tovar_items"
