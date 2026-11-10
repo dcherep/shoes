@@ -32,7 +32,7 @@ class Tovar(QWidget):
             self.ui.lbl_price.setText(f'{tovars.price*0.75} руб (скидка!) ')
 
         if tovars.image_path != '':
-            self.ui.lbl_image.setPixmap(QPixmap(' ' + tovars.image_path))
+            self.ui.lbl_image.setPixmap(QPixmap('/ ' + tovars.image_path))
         else:
             self.ui.lbl_image.setPixmap(QPixmap('picture.png'))
 

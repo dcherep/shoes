@@ -35,7 +35,7 @@ class Ui_Widget(object):
         self.listWidget = QListWidget(self.frame_3)
         self.listWidget.setObjectName(u"listWidget")
         self.listWidget.setWordWrap(False)
-        self.listWidget.setSortingEnabled(True)
+        self.listWidget.setSortingEnabled(False)
 
         self.horizontalLayout_2.addWidget(self.listWidget)
 

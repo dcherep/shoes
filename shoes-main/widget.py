@@ -6,11 +6,13 @@ from PySide6.QtCore import QSize
 from sqlalchemy.orm import Session
 from models import create, engine, Tovars
 from tovar import Tovar
+from login import Login
 
 class Widget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = Ui_Widget()
+        self.user =None
         self.ui.setupUi(self)
         self.setWindowIcon(QIcon('Чудо Обувь.ico'))
         self.setWindowTitle('Обувной магазин')
@@ -31,9 +33,21 @@ class Widget(QWidget):
 
 
 
+    def load(self):
+        self.ui.label.setText(f'{self.user.surname} {self.user.name} {self.user.patr}')
+        self.load_tovars()
+
+    def logout(self):
+        self.user=None
+        login_window.show()
+        self.hide()
+
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = Widget()
-    widget.show()
+    login_window =Login(widget)
+    login_window.show()
     sys.exit(app.exec())
 
