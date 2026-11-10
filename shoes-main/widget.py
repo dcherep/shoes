@@ -13,6 +13,7 @@ class Widget(QWidget):
         self.ui = Ui_Widget()
         self.ui.setupUi(self)
         self.setWindowIcon(QIcon('Чудо Обувь.ico'))
+        self.setWindowTitle('Обувной магазин')
         create()
 
         self.load_tovars()

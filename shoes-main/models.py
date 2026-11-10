@@ -59,6 +59,7 @@ class Tovars(Base):
     sub_cat = relationship("SubCategory", lazy="joined")
     category = association_proxy("sub_cat", "category")
     items = relationship("TovarItems", lazy="joined")
+    order_items = relationship("OrdersItems", lazy="joined")
 
 class TovarItems(Base):
     __tablename__="tovar_items"
@@ -81,6 +82,7 @@ class OrdersItems(Base):
     size_id=Column(Integer,ForeignKey("sizes.id"),nullable=False )
     amount=Column(String,nullable=False)
     price=Column(Float,nullable=False )
+    orders=relationship("Orders", lazy="joined")
 
 
 def create():
