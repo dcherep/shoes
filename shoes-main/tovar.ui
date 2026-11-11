@@ -6,124 +6,91 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>599</width>
-    <height>104</height>
+    <width>800</width>
+    <height>180</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
-  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0" columnstretch="1,1,1,3,1">
-   <item row="2" column="1">
-    <widget class="QLabel" name="label_3">
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <italic>true</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Категория</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLabel" name="label_4">
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <italic>true</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Количество</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QLabel" name="label_5">
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <italic>true</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Состав</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" colspan="3" alignment="Qt::AlignmentFlag::AlignHCenter">
-    <widget class="QLabel" name="lbl_name">
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <pointsize>12</pointsize>
-       <italic>true</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Производство  |  Наименование</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" rowspan="3">
+  <layout class="QGridLayout" name="gridLayout" columnstretch="1,2,3,0">
+   
+   <item row="0" column="0" rowspan="4">
     <widget class="QLabel" name="lbl_image">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
+     <property name="minimumSize">
+      <size><width>100</width><height>100</height></size>
      </property>
-     <property name="text">
-      <string>TextLabel</string>
+     <property name="maximumSize">
+      <size><width>100</width><height>100</height></size>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="2" column="4" rowspan="3">
-    <widget class="QLabel" name="lbl_price">
-     <property name="text">
-      <string>TextLabel</string>
+
+   <item row="0" column="1" colspan="2">
+    <widget class="QLabel" name="lbl_name">
+     <property name="font">
+      <font><pointsize>12</pointsize><bold>true</bold></font>
      </property>
-    </widget>
-   </item>
-   <item row="3" column="2" colspan="2">
-    <widget class="QLabel" name="lbl_count">
      <property name="text">
-      <string>TextLabel</string>
+      <string>Производство | Наименование</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="2" column="2" colspan="2">
+
+   <item row="1" column="1">
+    <widget class="QLabel" name="label_2">
+     <property name="text"><string>Категория:</string></property>
+    </widget>
+   </item>
+   <item row="1" column="2">
     <widget class="QLabel" name="lbl_category">
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
+     <property name="text"><string>TextLabel</string></property>
     </widget>
    </item>
-   <item row="4" column="2" colspan="2">
+
+   <item row="2" column="1">
+    <widget class="QLabel" name="label">
+     <property name="text"><string>Количество:</string></property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QLabel" name="lbl_count">
+     <property name="text"><string>TextLabel</string></property>
+    </widget>
+   </item>
+
+   <item row="3" column="1">
+    <widget class="QLabel" name="label_5">
+     <property name="text"><string>Состав:</string></property>
+    </widget>
+   </item>
+   <item row="3" column="2">
     <widget class="QLabel" name="lbl_sostav">
-     <property name="text">
-      <string>TextLabel</string>
+     <property name="text"><string>TextLabel</string></property>
+     <property name="wordWrap"><bool>true</bool></property>
+    </widget>
+   </item>
+
+   <item row="0" column="3" rowspan="4" alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTop">
+    <widget class="QLabel" name="lbl_price">
+     <property name="minimumSize">
+      <size><width>120</width><height>0</height></size>
      </property>
-     <property name="wordWrap">
-      <bool>true</bool>
+     <property name="font">
+      <font><pointsize>11</pointsize><bold>true</bold></font>
+     </property>
+     <property name="text">
+      <string>Цена</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTop</set>
      </property>
     </widget>
    </item>
+   
   </layout>
  </widget>
  <resources/>
