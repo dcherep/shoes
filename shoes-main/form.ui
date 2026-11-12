@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>949</width>
     <height>600</height>
    </rect>
   </property>
@@ -62,9 +62,9 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QLineEdit" name="lineEdit">
-        <property name="placeholderText">
-         <string>Поиск </string>
-        </property>
+           <property name="placeholderText">
+            <string>Поиск </string>
+           </property>
           </widget>
          </item>
         </layout>

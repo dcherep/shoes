@@ -19,10 +19,6 @@ class Widget(QWidget):
         self.setWindowTitle('Обувной магазин')
         create()
 
-        with Session(engine) as db:
-            for cat in db.query(Category).all():
-                self.ui.comboBox.addItem(cat.name)
-
         self.load_tovars()
 
         self.ui.pushButton.clicked.connect(self.show_login)
@@ -48,6 +44,7 @@ class Widget(QWidget):
         self.login_window.show()
         self.user=None
         self.ui.label.setText('Не авторизован')
+        self.ui.pushButton.setText('Войти')
 
         self.ui.comboBox.hide()
         self.ui.groupBox_2.hide()
@@ -72,17 +69,16 @@ class Widget(QWidget):
             if current_cat != "Все категории" and current_cat != "":
                 tovary = [t for t in tovary if t.category and t.category.name == current_cat]
 
-            def get_total_count(t):
-                return sum(int(item.amount) for item in t.items) if t.items else 0
+            # total_count = sum(t.items.amount)
 
             if self.ui.radioButton_2.isChecked():
                 tovary = sorted(tovary, key=lambda t: t.price)
             elif self.ui.radioButton_3.isChecked():
                 tovary = sorted(tovary, key=lambda t: t.price, reverse=True)
             elif self.ui.radioButton_4.isChecked():
-                tovary = sorted(tovary, key=lambda t: get_total_count(t))
+                tovary = sorted(tovary, key=lambda t: total_count)
             elif self.ui.radioButton_5.isChecked():
-                tovary = sorted(tovary, key=lambda t: get_total_count(t), reverse=True)
+                tovary = sorted(tovary, key=lambda t: total_count, reverse=True)
 
 
             search = self.ui.lineEdit.text().strip().lower()

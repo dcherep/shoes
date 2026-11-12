@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QMessageBox, QWidget
 from PySide6.QtCore import Signal
 from sqlalchemy.orm import Session
 from PySide6.QtGui import QIcon, QPixmap
-from models import *
+from models import User,engine
 
 
 class Login(QWidget):
