@@ -17,9 +17,10 @@ class Login(QWidget):
         self.ui.label_3.setPixmap(QPixmap('Чудо Обувь.ico'))
         self.ui.pushButton.clicked.connect(self.check_login)
         self.ui.pushButton_2.clicked.connect(self.close)
-
+    #загружаем список пользователей в выпадающий список
     def check_login(self):
         l=self.ui.lineEdit.text().strip()
+        #поле пустое
         if l == '':
             msg=QMessageBox(self)
             msg.setText("Введите логин")
@@ -36,6 +37,7 @@ class Login(QWidget):
                     msg.setIcon(QMessageBox.Critical)
                     msg.exec()
                 else:
+                    #отправляем сигнал и передаем объект пользователя
                     self.success.emit(user)
                     self.close()
         except Exception as e:

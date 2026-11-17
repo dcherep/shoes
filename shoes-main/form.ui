@@ -55,19 +55,10 @@
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox">
-        <property name="title">
-         <string/>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="placeholderText">
+         <string>Поиск </string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QLineEdit" name="lineEdit">
-           <property name="placeholderText">
-            <string>Поиск </string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
       <item>
@@ -113,6 +104,16 @@
          </item>
         </layout>
        </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Корзина</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListView" name="listView"/>
       </item>
       <item>
        <spacer name="verticalSpacer">
