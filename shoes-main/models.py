@@ -61,18 +61,21 @@ class Tovars(Base):
     items = relationship("TovarItems", lazy="joined")
     order_items = relationship("OrdersItems", lazy="joined")
 
+
 class TovarItems(Base):
     __tablename__="tovar_items"
     id = Column(Integer, primary_key=True, index=True)
     tovar_id=Column(Integer,ForeignKey("tovars.id"),nullable=False )
     size_id=Column(Integer,ForeignKey("sizes.id"),nullable=False )
     amount=Column(String,nullable=False)
+    size = relationship("Size", lazy="joined")
 
 class Orders(Base):
     __tablename__="orders"
     id = Column(Integer, primary_key=True, index=True)
     date=Column(Date,nullable=False )
     user_id=Column(Integer,ForeignKey("users.id"),nullable=False )
+
 
 class OrdersItems(Base):
     __tablename__="orders_items"

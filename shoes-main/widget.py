@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from models import create, engine, Tovars, TovarItems,OrdersItems,Category
 from tovar import Tovar
 from login import Login
+from info import Info
 
 class Widget(QWidget):
     def __init__(self, parent=None):
@@ -14,6 +15,7 @@ class Widget(QWidget):
         self.ui = Ui_Widget()
         self.ui.setupUi(self)
         self.login_window=None
+        self.info_window=None
         self.user=None
         self.setWindowIcon(QIcon('Чудо Обувь.ico'))
         self.setWindowTitle('Обувной магазин')
@@ -29,6 +31,7 @@ class Widget(QWidget):
         self.ui.radioButton_4.toggled.connect(self.load_tovars)
         self.ui.radioButton_5.toggled.connect(self.load_tovars)
         self.ui.lineEdit.textChanged.connect(self.load_tovars)
+        self.ui.listWidget.itemClicked.connect(self.show_info)
 
                 
         self.ui.comboBox.hide()
@@ -36,6 +39,13 @@ class Widget(QWidget):
         self.ui.groupBox.hide()
 
 
+    def show_info(self,item):
+        if self.info_window is None:
+            self.info_window = Info()
+
+        tovar = self.ui.listWidget.itemWidget(item)
+        if tovar:
+            self.info_window.show_info(tovar.tovars)
 
     def show_login(self):
         if self.login_window is None:
