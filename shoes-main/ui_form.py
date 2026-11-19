@@ -103,6 +103,11 @@ class Ui_Widget(object):
 
         self.verticalLayout.addWidget(self.listView)
 
+        self.pushButton_2 = QPushButton(self.frame_2)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+
+        self.verticalLayout.addWidget(self.pushButton_2)
+
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
@@ -155,6 +160,7 @@ class Ui_Widget(object):
         self.radioButton_4.setText(QCoreApplication.translate("Widget", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e(\u043f\u043e \u0432\u043e\u0437\u0440\u0430\u0441\u0442\u0430\u043d\u0438\u044e)", None))
         self.radioButton_5.setText(QCoreApplication.translate("Widget", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e(\u043f\u043e \u0443\u0431\u044b\u0432\u0430\u043d\u0438\u044e)", None))
         self.label_2.setText(QCoreApplication.translate("Widget", u"\u041a\u043e\u0440\u0437\u0438\u043d\u0430", None))
+        self.pushButton_2.setText(QCoreApplication.translate("Widget", u"\u041e\u0444\u043e\u0440\u043c\u0438\u0442\u044c", None))
         self.label.setText(QCoreApplication.translate("Widget", u"\u041d\u0435\u0430\u0432\u0442\u043e\u0440\u0438\u0437\u043e\u0432\u0430\u043d\u043d\u044b\u0439 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c", None))
         self.pushButton.setText(QCoreApplication.translate("Widget", u"\u0412\u043e\u0439\u0442\u0438", None))
     # retranslateUi

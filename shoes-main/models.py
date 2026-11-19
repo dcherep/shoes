@@ -75,6 +75,7 @@ class Orders(Base):
     id = Column(Integer, primary_key=True, index=True)
     date=Column(Date,nullable=False )
     user_id=Column(Integer,ForeignKey("users.id"),nullable=False )
+    #user = relationship("User", lazy="joined")
 
 
 class OrdersItems(Base):

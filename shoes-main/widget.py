@@ -1,13 +1,14 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QListWidgetItem
+from PySide6.QtWidgets import QApplication, QWidget, QListWidgetItem,QMessageBox
 from ui_form import Ui_Widget
 from PySide6.QtGui import QIcon,QPixmap,QStandardItemModel, QStandardItem
 from PySide6.QtCore import QSize
 from sqlalchemy.orm import Session
-from models import create, engine, Tovars, TovarItems,OrdersItems,Category
+from models import create, engine, Tovars, TovarItems,OrdersItems,Category,Orders,User
 from tovar import Tovar
 from login import Login
 from info import Info
+from datetime import date, timedelta
 
 class Widget(QWidget):
     def __init__(self, parent=None):
@@ -25,7 +26,7 @@ class Widget(QWidget):
         #загружаем товары
         self.load_tovars()
 
-        #
+        #создаем модель  и привязываем ее к QListView
         self.model = QStandardItemModel()
         self.ui.listView.setModel(self.model)
 
@@ -39,6 +40,7 @@ class Widget(QWidget):
         self.ui.radioButton_5.toggled.connect(self.load_tovars)
         self.ui.lineEdit.textChanged.connect(self.load_tovars)
         self.ui.listWidget.itemClicked.connect(self.show_info)
+        self.ui.pushButton_2.clicked.connect(self.create_order)
 
         #скрываем виджет бокс для неавторизованных
         self.ui.comboBox.hide()
@@ -46,6 +48,35 @@ class Widget(QWidget):
         self.ui.lineEdit.hide()
         #self.ui.listWidget.itemClicked.hide()
 
+    #создание заказа
+    def create_order(self):
+        with Session(engine) as db:
+            #создадим новый заказ
+            new_order = Orders(date=date.today(),user_id=self.user.id)
+            db.add(new_order)
+            db.flush()#отправляет INSERT в БД, но ещё не фиксирует транзакцию
+            #id нового заказа теперь доступен вот так: new_order.id
+
+            #перебираем позиции в заказе
+            for row in range(self.model.rowCount()):
+                item=self.model.item(row)#берем QStandardItem напрямую по номеру строки
+                #товар
+                tovar=item.data()['tovar']
+                #размер
+                size=item.data()['size']
+                #количество
+                amount=item.data()['amount']
+                #цена
+                price=item.data()['price']
+                #добавляем товары к заказу (в таблицу order_items)
+                orders_items=OrdersItems(order_id=new_order.id,tovar_id=tovar.id,size_id=size.id,amount=amount,price=price)
+                db.add(orders_items)
+
+            db.commit()
+        #выведем сообщение об успехе
+        QMessageBox.information(self,'Успех','Заказ успешно оформлен!')
+        #уберем товары из заказа
+        self.model.clear()
 
     def show_info(self,item):
         #если окно ещё не создано - создаём его
@@ -57,9 +88,10 @@ class Widget(QWidget):
         if tovar:
             self.info_window.show_info(tovar.tovars)
 
-    def add_tovar(self, t, s, a):
+
+    def add_tovar(self, t, s, a,p):
         item = QStandardItem(t.name)
-        item.setData({"tovar": t, "size":s,"amount": a})#сохраняем словарь
+        item.setData({"tovar": t, "size":s,"amount": a,"price": p})#сохраняем словарь
         self.model.appendRow(item)
 
     #покажем окно авторизации

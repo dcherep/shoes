@@ -7,7 +7,7 @@ from models import Tovars,Size
 
 
 class Info(QWidget):
-    add = Signal(Tovars,Size,int)
+    add = Signal(Tovars,Size,int,float)
     def __init__(self, parent=None):
         super().__init__(parent)
         #загружаем UI
@@ -28,7 +28,7 @@ class Info(QWidget):
         size=self.ui.comboBox.currentData()
         #получим кол-во
         amount=self.ui.spinBox.value()
-        self.add.emit(self.tovar,size,amount)
+        self.add.emit(self.tovar,size,amount,self.tovar.price)
 
 
     def show_info(self,tovar):
