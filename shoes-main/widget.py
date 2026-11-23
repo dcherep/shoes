@@ -71,6 +71,9 @@ class Widget(QWidget):
                 #добавляем товары к заказу (в таблицу order_items)
                 orders_items=OrdersItems(order_id=new_order.id,tovar_id=tovar.id,size_id=size.id,amount=amount,price=price)
                 db.add(orders_items)
+                #уменьшим кол-во товаров на складе
+                tovar_item = db.query(TovarItems).filter_by(tovar_id=tovar.id, size_id=size.id).first()
+                tovar_item.amount = str(int(tovar_item.amount) - int(amount))
 
             db.commit()
         #выведем сообщение об успехе
