@@ -101,6 +101,7 @@ class Ui_Form(object):
 
         self.spinBox = QSpinBox(Form)
         self.spinBox.setObjectName(u"spinBox")
+        self.spinBox.setDisplayIntegerBase(30)
 
         self.gridLayout.addWidget(self.spinBox, 12, 1, 1, 2)
 

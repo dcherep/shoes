@@ -131,7 +131,11 @@
     <widget class="QComboBox" name="comboBox"/>
    </item>
    <item row="12" column="1" colspan="2">
-    <widget class="QSpinBox" name="spinBox"/>
+    <widget class="QSpinBox" name="spinBox">
+     <property name="displayIntegerBase">
+      <number>30</number>
+     </property>
+    </widget>
    </item>
    <item row="13" column="1" colspan="2">
     <widget class="QPushButton" name="pushButton_3">

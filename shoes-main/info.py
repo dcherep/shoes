@@ -1,9 +1,10 @@
 from PySide6.QtWidgets import QWidget,QMessageBox
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import QPixmap,QIcon
+from sqlalchemy.orm import Session
 from PySide6.QtCore import Qt, Signal
 from datetime import date, timedelta
-from models import Tovars,Size
+from models import create, engine,Tovars,Size,TovarItems
 
 
 class Info(QWidget):
@@ -28,12 +29,33 @@ class Info(QWidget):
         size=self.ui.comboBox.currentData()
         #получим кол-во
         amount=self.ui.spinBox.value()
+        #нельзя заказать ноль штук или менее
+        if amount<=0:
+            QMessageBox.critical(self,'Ошибка','Без количества нельзя заказать!')
+            return
+        #нельзя заказать больше кол-ва чем на складе
+        with Session(engine) as db:
+            #получим товар со склада
+            tovar_item = db.query(TovarItems).filter(TovarItems.tovar_id==self.tovar.id, TovarItems.size_id==size.id).first()
+            if amount > int(tovar_item.amount):
+                QMessageBox.critical(self,'Ошибка',f'Количество не может быть больше, чем {tovar_item.amount}.\nВот столько есть на складе!')
+                return
         self.add.emit(self.tovar,size,amount,self.tovar.price)
+        self.close()
 
 
-    def show_info(self,tovar):
+    def show_info(self,tovar,user):
         #запомним товар
         self.tovar = tovar
+        #если не авторизован - заказать товар нельзя
+        if user is None:
+            self.ui.comboBox.setEnabled(False)
+            self.ui.spinBox.setEnabled(False)
+            self.ui.pushButton_3.setEnabled(False)
+        else:
+            self.ui.comboBox.setEnabled(True)
+            self.ui.spinBox.setEnabled(True)
+            self.ui.pushButton_3.setEnabled(True)
         self.ui.lbl_name.setText(tovar.name)
         self.ui.lbl_desc.setText(tovar.description)
         self.ui.lbl_category.setText(tovar.category.name)

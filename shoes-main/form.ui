@@ -38,6 +38,9 @@
    </item>
    <item row="1" column="0">
     <widget class="QFrame" name="frame_2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="frameShape">
       <enum>QFrame::Shape::StyledPanel</enum>
      </property>
@@ -119,6 +122,13 @@
        <widget class="QPushButton" name="pushButton_2">
         <property name="text">
          <string>Оформить</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>Заказы</string>
         </property>
        </widget>
       </item>

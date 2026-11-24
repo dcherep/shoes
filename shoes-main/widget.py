@@ -9,6 +9,7 @@ from tovar import Tovar
 from login import Login
 from info import Info
 from datetime import date, timedelta
+from zakaz import Zakaz
 
 class Widget(QWidget):
     def __init__(self, parent=None):
@@ -17,6 +18,7 @@ class Widget(QWidget):
         self.ui.setupUi(self)
         self.login_window=None
         self.info_window=None
+        self.zakaz_window=None
         self.user=None
         self.setWindowIcon(QIcon('Чудо Обувь.ico'))
         self.setWindowTitle('Обувной магазин')
@@ -41,12 +43,15 @@ class Widget(QWidget):
         self.ui.lineEdit.textChanged.connect(self.load_tovars)
         self.ui.listWidget.itemClicked.connect(self.show_info)
         self.ui.pushButton_2.clicked.connect(self.create_order)
+        self.ui.pushButton_3.clicked.connect(self.show_order)
 
-        #скрываем виджет бокс для неавторизованных
-        self.ui.comboBox.hide()
-        self.ui.groupBox_2.hide()
-        self.ui.lineEdit.hide()
-        #self.ui.listWidget.itemClicked.hide()
+    #открываем список заказов
+    def show_order(self,item):
+        #если окно ещё не создано - создаём его
+        if self.zakaz_window is None:
+            self.zakaz_window = Zakaz()
+            self.zakaz_window.show()
+
 
     #создание заказа
     def create_order(self):
@@ -56,7 +61,6 @@ class Widget(QWidget):
             db.add(new_order)
             db.flush()#отправляет INSERT в БД, но ещё не фиксирует транзакцию
             #id нового заказа теперь доступен вот так: new_order.id
-
             #перебираем позиции в заказе
             for row in range(self.model.rowCount()):
                 item=self.model.item(row)#берем QStandardItem напрямую по номеру строки
@@ -73,7 +77,8 @@ class Widget(QWidget):
                 db.add(orders_items)
                 #уменьшим кол-во товаров на складе
                 tovar_item = db.query(TovarItems).filter_by(tovar_id=tovar.id, size_id=size.id).first()
-                tovar_item.amount = str(int(tovar_item.amount) - int(amount))
+                tovar_item.amount -= amount
+                db.add(tovar_item)
 
             db.commit()
         #выведем сообщение об успехе
@@ -89,7 +94,7 @@ class Widget(QWidget):
 
         tovar = self.ui.listWidget.itemWidget(item)
         if tovar:
-            self.info_window.show_info(tovar.tovars)
+            self.info_window.show_info(tovar.tovars, self.user)
 
 
     def add_tovar(self, t, s, a,p):
@@ -110,10 +115,7 @@ class Widget(QWidget):
         self.ui.label.setText('Не авторизован')
         self.ui.pushButton.setText('Войти')
 
-        self.ui.comboBox.hide()
-        self.ui.groupBox_2.hide()
-        self.ui.lineEdit.hide()
-        #self.ui.listWidget.itemClicked.hide()
+        self.ui.frame_2.setEnabled(False)
 
     #авторизация прошла
     def login_success(self,user):
@@ -121,11 +123,7 @@ class Widget(QWidget):
         self.ui.label.setText(f'{self.user.surname} {self.user.name} {self.user.patr}')
         self.ui.pushButton.setText('Выйти')
         #показываем виджет бокс
-        self.ui.comboBox.show()
-
-        self.ui.groupBox_2.show()
-        self.ui.lineEdit.show()
-        #self.ui.listWidget.itemClicked.show()
+        self.ui.frame_2.setEnabled(True)
 
     #загружаем список товаров
     def load_tovars(self):
