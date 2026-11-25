@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget,QMessageBox
+from PySide6.QtWidgets import QWidget,QMessageBox,QHeaderView,QTableView
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import QPixmap,QIcon,QStandardItemModel, QStandardItem
 from sqlalchemy.orm import Session
@@ -21,12 +21,25 @@ class Zakaz(QWidget):
 
         #создаем модель  и привязываем ее к QTableView
         self.model = QStandardItemModel()
+        self.model.setHorizontalHeaderLabels(["ID","Дата","ФИО клиента"])
         self.ui.tableView.setModel(self.model)
+        #настройка внешнего вида и выделения
+        self.ui.tableView.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.ui.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
+        self.load_orders()
         self.ui.pushButton.clicked.connect(self.close)
+        #self.ui.pushButton_2.clicked.connect(self.add_tovar)
 
-    def show_order(self,order):
-        self.order = order
-        orders_items=OrdersItems(order_id=new_order.id,tovar_id=tovar.id,size_id=size.id,amount=amount,price=price)
-
-
+    #загрузим список заказов из базы
+    def load_orders(self):
+        with Session(engine) as db:
+            orders = db.query(Orders).all()
+            for o in orders:
+                #создаем ячейки таблицы
+                id=QStandardItem(str(o.id))
+                #сохраняем сам объект Order в первую ячейку (удобно при клике)
+                id.setData(o)
+                date = QStandardItem(o.date.strftime("%d.%m.%Y"))
+                user=QStandardItem(str(o.user))
+                self.model.appendRow([id,date,user])

@@ -14,8 +14,8 @@ class User(Base):
     login=Column(String,nullable=False )
     role_id=Column(Integer,ForeignKey("roles.id"),nullable=False)
     role=relationship("Role", lazy="joined")
-    #def __str__(self):
-        #return f'{self.surname} {self.name} {self.patr}
+    def __str__(self):
+        return f'{self.surname} {self.name} {self.patr}'
 
 class Role(Base):
     __tablename__="roles"
@@ -75,7 +75,7 @@ class Orders(Base):
     id = Column(Integer, primary_key=True, index=True)
     date=Column(Date,nullable=False )
     user_id=Column(Integer,ForeignKey("users.id"),nullable=False )
-    #user = relationship("User", lazy="joined")
+    user = relationship("User", lazy="joined")
 
 
 class OrdersItems(Base):
