@@ -32,6 +32,7 @@ class Widget(QWidget):
         self.model = QStandardItemModel()
         self.ui.listView.setModel(self.model)
 
+
         #соединяем сигналы со слотами
         self.ui.pushButton.clicked.connect(self.show_login)
         self.ui.comboBox.currentIndexChanged.connect(self.load_tovars)

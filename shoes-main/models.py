@@ -26,6 +26,8 @@ class Size(Base):
     __tablename__="sizes"
     id = Column(Integer, primary_key=True, index=True)
     name=Column(String,nullable=True)
+    def __str__(self):
+        return f'{self.name}'
 
 class Category(Base):
     __tablename__="categories"
@@ -61,6 +63,9 @@ class Tovars(Base):
     items = relationship("TovarItems", lazy="joined")
     order_items = relationship("OrdersItems", lazy="joined")
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class TovarItems(Base):
     __tablename__="tovar_items"
@@ -87,6 +92,8 @@ class OrdersItems(Base):
     amount=Column(String,nullable=False)
     price=Column(Float,nullable=False )
     orders=relationship("Orders", lazy="joined")
+    tovar=relationship("Tovars", lazy="joined")
+    size=relationship("Size", lazy="joined")
 
 
 def create():
